@@ -1,3 +1,4 @@
+using ApiTokenTableAlumnos.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +27,8 @@ namespace ApiTokenTableAlumnos
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            String keys = this.Configuration["StorageAccountKey"];
+            services.AddTransient(x => new ServiceTableAlumnos(keys));
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc(name: "v1", new OpenApiInfo
@@ -36,6 +39,11 @@ namespace ApiTokenTableAlumnos
                 });
             });
             services.AddControllers();
+        }
+
+        private object ServiceTableAlumnos(string keys)
+        {
+            throw new NotImplementedException();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

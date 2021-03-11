@@ -19,5 +19,24 @@ namespace ApiTokenTableAlumnos.Services
             this.tablaalumnos =
                 client.GetTableReference("tablaalumnos");
         }
+
+        //METODO PARA OFRECER TOKENS AL CONSUMIDOR
+        //EN TABLES, PODEMOS FILTRAR LOS REGISTROS QUE 
+        //DESEAMOS DEVOLVER O DAR ACCESO POR RANGOS
+        //DE ROWKEY O PARTITIONKEY O COMBINACION
+        public String GetKeySaS(String curso)
+        {
+            SharedAccessTablePolicy policy =
+                new SharedAccessTablePolicy
+                {
+                     SharedAccessExpiryTime= DateTime.UtcNow.AddMinutes(30),
+                      Permissions = SharedAccessTablePermissions.Query
+                      | SharedAccessTablePermissions.Delete
+                };
+            String token = this.tablaalumnos.GetSharedAccessSignature(
+                policy, "rangocursos"
+                , curso, null, curso, null);
+            return token;
+        }
     }
 }
