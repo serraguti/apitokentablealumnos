@@ -34,7 +34,7 @@ namespace ApiTokenTableAlumnos.Services
                       | SharedAccessTablePermissions.Delete
                 };
             String token = this.tablaalumnos.GetSharedAccessSignature(
-                policy, "rangocursos"
+                policy, null
                 , curso, null, curso, null);
             return token;
         }
